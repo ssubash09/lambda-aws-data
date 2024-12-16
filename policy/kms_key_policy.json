@@ -1,0 +1,38 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid"    : "Enable IAM User Permissions",
+        "Effect" : "Allow",
+        "Principal" : {
+          "AWS" : "arn:aws:iam::${account_id}:root"
+        },
+        "Action"   : "kms:*",
+        "Resource" : "*"
+      },
+      {
+        "Sid"    : "Allow use of the key",
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : [
+            "lambda.amazonaws.com",
+            "s3.amazonaws.com",
+            "sns.amazonaws.com",
+            "cloudwatch.amazonaws.com",
+            "delivery.logs.amazonaws.com",
+            "events.amazonaws.com",
+            "logs.amazonaws.com"
+          ]
+        },
+        "Action" : [
+          "kms:DescribeKey",
+          "kms:Encrypt",
+          "kms:Decrypt",
+          "kms:ReEncrypt*",
+          "kms:GenerateDataKey",
+          "kms:GenerateDataKeyWithoutPlaintext"
+        ],
+        "Resource" : "*"
+      }
+    ]
+  }

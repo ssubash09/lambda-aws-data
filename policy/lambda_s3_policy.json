@@ -1,0 +1,69 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "s3roleaccess",
+        "Action": [
+          "s3:GetObject"
+        ],
+        "Effect": "Allow",
+        "Resource": [
+            "arn:aws:s3:::lambda-${use_case}-${environment}-${bucket_name}/*"
+        ]
+      },
+      {
+        "Sid": "allowotheresoruces",
+        "Action": [
+          "logs:CreateExportTask",
+          "logs:CreateLogDelivery",
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:DescribeDestinations",
+          "logs:DescribeExportTasks",
+          "logs:DescribeLogGroups",
+          "logs:DescribeLogStreams",
+          "logs:DescribeMetricFilters",
+          "logs:DescribeQueries",
+          "logs:DescribeResourcePolicies",
+          "logs:DescribeSubscriptionFilters",
+          "logs:GetDelivery",
+          "logs:GetLogDelivery",
+          "logs:GetLogEvents",
+          "logs:GetLogRecord",
+          "sns: *",
+          "iam:GetPolicy",
+          "iam:GetPolicyVersion",
+          "iam:GetRole",
+          "lambda:InvokeFunction",
+          "lambda:InvokeFunctionUrl"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      },
+      {
+        "Sid": "allowkms",
+        "Action": [
+          "kms:Decrypt",
+          "kms:DescribeKey",
+          "kms:Encrypt",
+          "kms:GenerateDataKey",
+          "kms:ReEncryptFrom",
+          "kms:ReEncryptTo"
+        ],
+        "Effect": "Allow",
+        "Resource": ["${kms_key_arn}"]
+      },
+      {
+        "Sid": "allowvpc",
+        "Action": [
+          "ec2:AttachNetworkInterface",
+          "ec2:CreateNetworkInterface",
+          "ec2:DeleteNetworkInterface",
+          "ec2:DescribeInstances",
+          "ec2:DescribeNetworkInterfaces"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ]
+  }

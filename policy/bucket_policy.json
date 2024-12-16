@@ -1,0 +1,29 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "Stmt1734251878732",
+        "Action": [
+          "s3:PutObject"
+        ],
+        "Effect": "Deny",
+        "Resource": "arn:aws:s3:::lambda-${use_case}-${environment}-${bucket_name}/*",
+        "Condition": {
+          "StringNotEquals": {
+            "s3:x-amz-server-side-encryption": "aws:kms"
+          }
+        },
+        "Principal": "*"
+      },
+      {
+        "Sid": "AllowLambdaToPutBucketNotification",
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "lambda.amazonaws.com"
+        },
+        "Action": "s3:PutBucketNotification",
+        "Resource": "arn:aws:s3:::lambda-${use_case}-${environment}-${bucket_name}"
+      }
+    ]
+  }
+  
